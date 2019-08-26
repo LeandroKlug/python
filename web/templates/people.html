@@ -121,23 +121,23 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Partida</th>
-                  <th scope="col">Destino</th>
-                  <th scope="col">Tempo dias</th>
-                  <th scope="col">Quantidade pessoas</th>
-                  <th scope="col">Transporte</th>
+                  <th class="text-center">Nome</th>
+                  <th class="text-center">Partida</th>
+                  <th class="text-center">Destino</th>
+                  <th class="text-center">Tempo dias</th>
+                  <th class="text-center">Quantidade pessoas</th>
+                  <th class="text-center">Transporte</th>
                 </tr>
               </thead>
               <tbody>
                 {% for p in people %}
                 <tr>
-                  <th scope="row"></th>
-                  <td>Blumenau</td>
-                  <td>São Paulo</td>
-                  <td>5 dias</td>
-                  <td>1 pessoa</td>
-                  <td>Avião</td>
+                  <td class="text-center">{{p.nome}}</td>
+                  <td class="text-center">{{p.partida}}</td>
+                  <td class="text-center">{{p.destino}}</td>
+                  <td class="text-center">{{p.tempo}}</td>
+                  <td class="text-center">{{p.quantidade}}</td>
+                  <td class="text-center">{{p.transporte}}</td>
                 </tr>
                 {% endfor %}
               </tbody>

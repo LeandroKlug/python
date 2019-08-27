@@ -1,6 +1,8 @@
 from flask import Flask, render_template
 from classe import Pessoa
 
+# http://bit.ly/2PfHiqX
+
 app = Flask(__name__)
 
 @app.route("/index")

@@ -1,33 +1,61 @@
-from flask import Flask, render_template
-from classe import Pessoa
+from flask import Flask, render_template, request
+from model import Viagem
+
+# http://bit.ly/2PfHiqX
 
 app = Flask(__name__)
 
-@app.route("/index")
+viagens = []
+
+@app.route("/")
 def index():
     return render_template('index.html')
 
-@app.route("/about")
-def about():
-    return render_template('about.html')
 
-@app.route("/price")
-def price():
-    return render_template('price.html') 
+@app.route("/listar_viagem")
+def listar_viagem():
+    
+    viagem = [
+        Viagem("Leandro Klug", "São Paulo")
+    ]    
 
-@app.route("/people")
-def people():
-	
-	    # popular com dados ficticios e depois jogar para inicio do arquivo
-    pessoas = [
-        Pessoa("João", "Blumenau", "São Paulo", "6", "1", "Avião"),
-        Pessoa("Bruno", "Blumenau", "Rio de Janeiro", "12", "1", "Avião"),
-        Pessoa("Maria", "Blumenau", "Curitiba", "2", "2", "Carro"),
-        Pessoa("Creuza", "Blumenau", "Florianópolis", "1", "4", "Ônibus"),
-        Pessoa("Carlos", "Blumenau", "Porto Alegre", "2", "3", "Avião"),
-        Pessoa("Sidnei", "Blumenau", "Brasília", "7", "3", "Avião")
-    ]
+    return render_template('listar_viagem.html', lista = viagens)
 
-    return render_template('people.html', people = pessoas)       
 
-app.run(debug=True)
+@app.route("/form_inserir_viagem")
+def form_inserir_viagem():
+    return render_template("form_inserir_viagem.html")
+
+
+@app.route("/incluir_viagem")
+def incluir_viagem():
+    
+    nome = request.args.get("nome")
+    local = request.args.get("local")
+
+    new = Viagem(nome, local)
+    viagens.append(new)
+
+    return render_template('success_msg.html', mensagem = "Viagem inserida!") 
+
+
+@app.route("/excluir_viagem")
+def excluir_viagem():
+
+    excluir = None
+
+    nome = request.args.get("nome")
+
+    for viagem in viagens:
+        
+        if nome == viagem.nome:
+            excluir = viagem
+            break
+
+    if excluir != None:
+        viagens.remove(excluir)
+
+    return listar_viagem()            
+
+
+app.run(host="0.0.0.0", debug=True)

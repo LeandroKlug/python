@@ -32,11 +32,49 @@ def incluir_viagem():
     
     nome = request.args.get("nome")
     local = request.args.get("local")
+    inicio = request.args.get("inicio")
+    volta = request.args.get("volta")
 
-    new = Viagem(nome, local)
+    new = Viagem(nome, local, inicio, volta)
     viagens.append(new)
 
     return render_template('success_msg.html', mensagem = "Viagem inserida!") 
+
+
+@app.route("/form_alterar_viagem")
+def form_alterar_viagem():
+
+    nome = request.args.get("nome")
+
+    for viagem in viagens:
+
+        if nome == viagem.nome:
+            return render_template('form_alterar_viagem', pessoa = viagem)
+
+    return listar_viagem()        
+
+
+
+@app.route("/alterar_viagem")
+def alterar_viagem():
+
+    nome = request.args.get("nome")
+    local = request.args.get("local")
+    ida = request.args.get("ida")
+    volta = request.args.get("volta")
+
+    indice = -1
+
+    for i in range(len(viagem)):
+        if viagem[i].nome == nome_original:
+            indice = i
+            break
+
+    if indice >= 0:
+        viagem[indice] = Viagem(nome, local, inicio, volta)        
+
+    return redirect(listar_viagem)
+
 
 
 @app.route("/excluir_viagem")

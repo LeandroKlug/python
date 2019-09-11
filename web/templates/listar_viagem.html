@@ -11,24 +11,25 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-8 my-5">
-		  			<h2>Sistema RDV - Relatório de Viagem</h2>
+		  			<a href="/"><h2>Sistema RDV - Relatório de Viagem</h2></a>
 		  			<p>Lista de viagens</p>
 		  		</div>
-			</div>	
+			</div>
+			<div class="col btn my-5">
+		      <a class="btn btn-outline-primary" href="form_inserir_viagem">Inserir Viagem</a><br>
+		    </div>	
+		      		{% for viagem in lista: %}
 		  <div class="row">
-		    <div class="col-sm">
-		      		{% for viagem in lista %}
-						{{ viagem.nome }} |	{{ viagem.endereco }}
-		    <a href="/excluir_viagem?nome={{ viagem.nome }}">Excluir</a>
+		    <div class="col-8">
+						{{ viagem.nome }} |	{{ viagem.local }} | {{ viagem.inicio }} | {{ viagem.volta }}
+		    </div>
+		    <div class="col-4">
+		    			<a class="btn btn-outline-success ml-5 mb-2" href="/alterar_viagem?nome={{ viagem.nome }}">Alterar</a>
+		    			<a class="right btn btn-outline-danger ml-3 mb-2" href="/excluir_viagem?nome={{ viagem.nome }}">Excluir</a>
 						<br>
-					{% endfor %}
-		    </div>
-		    <div class="col-sm">
-		      <a href="form_inserir_viagem">Inserir Viagem</a><br>
-		    </div>
-		    <div class="col-sm">
-		     			    </div>
+			</div>
 		  </div>
+					{% endfor %}
 		</div>
 
 

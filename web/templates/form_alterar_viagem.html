@@ -19,27 +19,30 @@
 			<div class="row justify-content-center">
 				<div class="col-8 my-5">
 		  			<a href="/"><h2>Sistema RDV - Relatório de Viagem</h2></a>
-		  			<p>Formulário de viagem</p>
+		  			<p>Formulário de alteração de viagem</p>
 		  		</div>
-				<form action="/incluir_viagem">
+				<form action="/alterar_viagem">
 				  <div class="form-row">
 				    <div class="form-group col-12">
 				      <label>Nome</label>
-				      <input type="text" class="form-control" name="nome" placeholder="Digite seu nome completo">
+				      <input type="text" class="form-control" name="nome" value="{{ viagem.nome }}">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label>Local</label>
-				    <input type="text" class="form-control" name="local" placeholder="Digite o destino">
+				    <input type="text" class="form-control" name="local" value="{{ viagem.local }}">
 				  </div>
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
 				      <label>Ida</label>
-				      <input type="text" name="inicio" class="form-control">
+				      <input type="text" name="inicio" class="form-control" value="{{ viagem.ida }}">
 				    </div>
 				    <div class="form-group col-md-6">
 				      <label>Volta</label>
-				      <input type="text" name="volta" class="form-control">
+				      <input type="text" name="volta" class="form-control" value="{{ viagem.volta }}">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <input type="hidden" name="nome_original" class="form-control" value="{{ viagem.nome }}">
 				    </div>
 				  </div>
 				  <div class="form-group">
@@ -66,7 +69,7 @@
 				      </label>
 				    </div>
 				  </div>
-				  <button type="submit" class="btn btn-primary">Inserir dados</button>
+				  <button type="submit" class="btn btn-primary">Alterar dados</button>
 				</form>
 		  	</div>
 		</div>

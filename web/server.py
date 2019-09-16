@@ -1,11 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from model import Viagem
+
 
 # http://bit.ly/2PfHiqX
 
 app = Flask(__name__)
 
-viagens = []
+lista_viagens = []
 
 @app.route("/")
 def index():
@@ -15,11 +16,11 @@ def index():
 @app.route("/listar_viagem")
 def listar_viagem():
     
-    viagem = [
+    nova_viagem = [
         Viagem("Leandro Klug", "São Paulo")
     ]    
 
-    return render_template('listar_viagem.html', lista = viagens)
+    return render_template('listar_viagem.html', lista = lista_viagens)
 
 
 @app.route("/form_inserir_viagem")
@@ -30,15 +31,31 @@ def form_inserir_viagem():
 @app.route("/incluir_viagem")
 def incluir_viagem():
     
-    nome = request.args.get("nome")
-    local = request.args.get("local")
-    inicio = request.args.get("inicio")
-    volta = request.args.get("volta")
+    #info básica
+    form_nome = request.args.get("input_nome")
+    form_local = request.args.get("input_local")
+    form_ida = request.args.get("input_ida")
+    form_volta = request.args.get("input_volta")
 
-    new = Viagem(nome, local, inicio, volta)
-    viagens.append(new)
+    # meios de transporte
+    form_carro = request.args.get("input_carro")
+    form_onibus = request.args.get("input_onibus")
+    form_aviao = request.args.get("input_aviao")
 
-    return render_template('success_msg.html', mensagem = "Viagem inserida!") 
+    nova_viagem = Viagem(
+        model_nome = form_nome, 
+        model_local = form_local, 
+        model_ida = form_ida, 
+        model_volta = form_volta,
+        model_carro = form_carro,
+        model_onibus = form_onibus,
+        model_aviao = form_aviao,
+        )
+    
+
+    lista_viagens.append(nova_viagem)
+
+    return render_template('success_msg.html', mensagem = f"Viagem {nova_viagem.nome} inserida!") 
 
 
 @app.route("/form_alterar_viagem")
@@ -46,10 +63,10 @@ def form_alterar_viagem():
 
     nome = request.args.get("nome")
 
-    for viagem in viagens:
+    for viagem in lista_viagens:
 
         if nome == viagem.nome:
-            return render_template('form_alterar_viagem', pessoa = viagem)
+            return render_template('form_alterar_viagem.html', viagem = viagem)
 
     return listar_viagem()        
 
@@ -65,15 +82,15 @@ def alterar_viagem():
 
     indice = -1
 
-    for i in range(len(viagem)):
-        if viagem[i].nome == nome_original:
+    for i in range(len(lista_viagens)):
+        if lista_viagens[i].nome == nome_original:
             indice = i
             break
 
     if indice >= 0:
-        viagem[indice] = Viagem(nome, local, inicio, volta)        
+        lista_viagens[indice] = Viagem(nome, local, ida, volta)        
 
-    return redirect(listar_viagem)
+    return listar_viagem()
 
 
 
@@ -84,14 +101,14 @@ def excluir_viagem():
 
     nome = request.args.get("nome")
 
-    for viagem in viagens:
+    for viagem in lista_viagens:
         
         if nome == viagem.nome:
             excluir = viagem
             break
 
     if excluir != None:
-        viagens.remove(excluir)
+        lista_viagens.remove(excluir)
 
     return listar_viagem()            
 

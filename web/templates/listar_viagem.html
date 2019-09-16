@@ -18,18 +18,37 @@
 			<div class="col btn my-5">
 		      <a class="btn btn-outline-primary" href="form_inserir_viagem">Inserir Viagem</a><br>
 		    </div>	
-		      		{% for viagem in lista: %}
-		  <div class="row">
-		    <div class="col-8">
-						{{ viagem.nome }} |	{{ viagem.local }} | {{ viagem.inicio }} | {{ viagem.volta }}
-		    </div>
-		    <div class="col-4">
-		    			<a class="btn btn-outline-success ml-5 mb-2" href="/alterar_viagem?nome={{ viagem.nome }}">Alterar</a>
-		    			<a class="right btn btn-outline-danger ml-3 mb-2" href="/excluir_viagem?nome={{ viagem.nome }}">Excluir</a>
-						<br>
-			</div>
-		  </div>
-					{% endfor %}
+		  <table class="table table-hover" width="100%">
+					{% if lista %}
+				<tr>
+					<th scope="col">Nome</th>
+					<th>Local</th>
+					<th>Início</th>
+					<th>Volta</th>
+					<th></th>
+					<th></th>
+				</tr>
+		      			{% for viagem in lista: %}
+					
+				<tr>
+					<td>{{ viagem.nome }}</td>
+					<td>{{ viagem.local }}</td>
+					<td>{{ viagem.ida }}</td>
+					<td>{{ viagem.volta }}</td>
+	    			<td>
+	    				<a class="btn btn-outline-success ml-5 mb-2" href="/form_alterar_viagem?nome={{ viagem.nome }}">Alterar</a>
+	    			</td>
+					<td>
+	    				<a class="right btn btn-outline-danger ml-3 mb-2" href="/excluir_viagem?nome={{ viagem.nome }}">Excluir</a>
+					</td>
+						{% endfor %}
+					{% else %}
+				
+					<td>Não há dados para mostrar</td>
+				
+					{% endif %}
+				</tr>
+		  </table>
 		</div>
 
 

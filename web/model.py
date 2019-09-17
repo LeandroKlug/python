@@ -31,16 +31,19 @@ class Evento:
 	data_final = ""
 	categoria = ""
 	endereco = ""
+	noturno = ""
+	diurno = ""
+	integral = ""
 
 	def __init__(self,
-		model_nome_evento,
-		model_data_inicio,
-		model_data_final,
-		model_categoria,
-		model_endereco,
-		model_noturno,
-		model_diurno,
-		model_integral
+		model_nome_evento	="",
+		model_data_inicio	="",
+		model_data_final	="",
+		model_categoria		="",
+		model_endereco		="",
+		model_noturno		="",
+		model_diurno		="",
+		model_integral		=""
 		):
 
 		self.nome_evento = model_nome_evento
@@ -61,10 +64,10 @@ class Pessoa:
 	cpf = ""
 
 	def __init__(self,
-		model_nome_pessoa,
-		model_idade,
-		model_genero,
-		model_cpf
+		model_nome_pessoa	="",
+		model_idade			="",
+		model_genero		="",
+		model_cpf			=""
 		):
 
 		self.nome_pessoa = model_nome_pessoa

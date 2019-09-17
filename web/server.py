@@ -24,9 +24,7 @@ def index():
 @app.route("/listar_pessoas")
 def listar_pessoas():
     
-    nova_pessoa = [
-        Pessoa("Leandro Klug", "São Paulo")
-    ]    
+    nova_pessoa = []    
 
     return render_template('listar_pessoas.html', lista = listar_pessoas)
 
@@ -131,11 +129,9 @@ def excluir_pessoa():
 @app.route("/listar_viagem")
 def listar_viagem():
     
-    nova_viagem = [
-        Viagem("Leandro Klug", "São Paulo")
-    ]    
+    nova_viagem = []    
 
-    return render_template('listar_viagem.html', lista = lista_viagens)
+    return render_template('listar_viagem.html', lista = listar_viagem)
 
 
 @app.route("/form_inserir_viagem")
@@ -242,11 +238,9 @@ def excluir_viagem():
 @app.route("/listar_evento")
 def listar_evento():
     
-    novo_evento = [
-        Evento("Leandro Klug", "São Paulo")
-    ]    
+    novo_evento = []    
 
-    return render_template('listar_eventos.html', lista = lista_eventos)
+    return render_template('listar_eventos.html', lista = listar_evento)
 
 
 @app.route("/form_inserir_evento")
@@ -257,88 +251,95 @@ def form_inserir_evento():
 @app.route("/incluir_evento")
 def incluir_evento():
     
-    #info básica parei aqui
-    form_nome = request.args.get("input_nome")
-    form_local = request.args.get("input_local")
-    form_ida = request.args.get("input_ida")
-    form_volta = request.args.get("input_volta")
+    # info básica 
+    form_nome_evento = request.args.get("input_nome_evento")
+    form_data_inicio = request.args.get("input_data_inicio")
+    form_data_final = request.args.get("input_data_final")
+    form_categoria = request.args.get("input_categoria")
+    form_endereco = request.args.get("input_endereco")
 
-    # meios de transporte
-    form_carro = request.args.get("input_carro")
-    form_onibus = request.args.get("input_onibus")
-    form_aviao = request.args.get("input_aviao")
+    # horário do evento
+    form_noturno = request.args.get("input_noturno")
+    form_diurno = request.args.get("input_diurno")
+    form_integral = request.args.get("input_integral")
 
     nova_viagem = Viagem(
-        model_nome = form_nome, 
-        model_local = form_local, 
-        model_ida = form_ida, 
-        model_volta = form_volta,
-        model_carro = form_carro,
-        model_onibus = form_onibus,
-        model_aviao = form_aviao,
+        model_nome_evento = form_nome_evento, 
+        model_data_inicio = form_data_inicio, 
+        model_data_final = form_data_final, 
+        model_categoria = form_categoria,
+        model_endereco = form_endereco,
+        model_noturno = form_noturno,
+        model_diurno = form_diurno,
+        model_integral = form_integral
         )
     
 
-    lista_viagens.append(nova_viagem)
+    lista_eventos.append(novo_evento)
 
     return render_template('success_msg.html', 
-        mensagem = f"Viagem {nova_viagem.nome} inserida!") 
+        mensagem = f"Viagem {novo_evento.nome_evento} inserida!") 
 
 
-@app.route("/form_alterar_viagem")
-def form_alterar_viagem():
+@app.route("/form_alterar_evento")
+def form_alterar_evento():
 
-    nome = request.args.get("nome")
+    nome_evento = request.args.get("nome_evento")
 
-    for viagem in lista_viagens:
+    for evento in lista_eventos:
 
-        if nome == viagem.nome:
+        if nome_evento == evento.nome_evento:
             return render_template('form_alterar_viagem.html', 
-                viagem = viagem)
+                evento = evento)
 
-    return listar_viagem()        
+    return listar_evento()        
 
 
 
-@app.route("/alterar_viagem")
-def alterar_viagem():
+@app.route("/alterar_evento")
+def alterar_evento():
 
-    nome = request.args.get("nome")
-    local = request.args.get("local")
-    ida = request.args.get("ida")
-    volta = request.args.get("volta")
+    nome_evento = request.args.get("nome_evento")
+    data_inicio = request.args.get("data_inicio")
+    data_final = request.args.get("data_final")
+    categoria = request.args.get("categoria")
+    endereco = request.args.get("endereco")
+    noturno = request.args.get("noturno")
+    diurno = request.args.get("diurno")
+    integral = request.args.get("integral")
 
     indice = -1
 
-    for i in range(len(lista_viagens)):
-        if lista_viagens[i].nome == nome_original:
+    for i in range(len(lista_eventos)):
+        if lista_eventos[i].nome_original == nome_original:
             indice = i
             break
 
     if indice >= 0:
-        lista_viagens[indice] = Viagem(nome, local, ida, volta)        
+        lista_eventos[indice] = Evento(nome_evento, data_inicio, data_final,
+                                        categoria, endereco, noturno, diurno, integral)        
 
-    return listar_viagem()
+    return listar_evento()
 
 
 
-@app.route("/excluir_viagem")
-def excluir_viagem():
+@app.route("/excluir_evento")
+def excluir_evento():
 
     excluir = None
 
-    nome = request.args.get("nome")
+    nome_evento = request.args.get("nome_evento")
 
-    for viagem in lista_viagens:
+    for evento in lista_eventos:
         
-        if nome == viagem.nome:
-            excluir = viagem
+        if nome_evento == evento.nome_evento:
+            excluir = evento
             break
 
     if excluir != None:
-        lista_viagens.remove(excluir)
+        lista_eventos.remove(excluir)
 
-    return listar_viagem()
+    return listar_evento()
 
 
 app.run(host="0.0.0.0", debug=True)

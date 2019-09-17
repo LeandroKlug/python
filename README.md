@@ -8,4 +8,3 @@
  - Criado um projeto para relatório de viagens, contendo formulário de viagem, evento e pessoa.
 
  - Criado o sistema CRUD para dinamizar dinamizar os dados dos formulários
-

@@ -1,5 +1,7 @@
 class Viagem:
 
+	pk = 0
+	nome = ""
 	local = ""
 	ida = ""
 	volta = ""
@@ -8,6 +10,8 @@ class Viagem:
 	aviao = ""
 
 	def __init__(self,  
+		model_pk	= "", 
+		model_nome	= "", 
 		model_local 	= "", 
 		model_ida 		= "", 
 		model_volta 	= "", 
@@ -16,12 +20,17 @@ class Viagem:
 		model_aviao 	= ""
 		):
 
+		self.pk = model_pk
+		self.nome = model_nome
 		self.local = model_local
 		self.ida = model_ida
 		self.volta = model_volta
 		self.carro = model_carro
 		self.onibus = model_onibus
 		self.aviao = model_aviao
+
+	def __str__(self):
+		return f'#{self.pk} - {self.nome}'
 
 
 class Evento:

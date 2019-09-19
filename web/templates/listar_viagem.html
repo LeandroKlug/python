@@ -25,10 +25,10 @@
 					<th>Local</th>
 					<th>Início</th>
 					<th>Volta</th>
-					<th></th>
-					<th></th>
+					<th>editar</th>
+					<th>excluir</th>
 				</tr>
-		      			{% for viagem in lista: %}
+		      			{% for viagem in lista %}
 					
 				<tr>
 					<td>{{ viagem.nome }}</td>
@@ -36,10 +36,10 @@
 					<td>{{ viagem.ida }}</td>
 					<td>{{ viagem.volta }}</td>
 	    			<td>
-	    				<a class="btn btn-outline-success ml-5 mb-2" href="/form_alterar_viagem?nome={{ viagem.nome }}">Alterar</a>
+	    				<a class="btn btn-outline-success ml-5 mb-2" href="/form_alterar_viagem?pos={{ viagem.pk }}">Alterar</a>
 	    			</td>
 					<td>
-	    				<a class="right btn btn-outline-danger ml-3 mb-2" href="/excluir_viagem?nome={{ viagem.nome }}">Excluir</a>
+	    				<a class="right btn btn-outline-danger ml-3 mb-2" href="/excluir_viagem?pos={{ viagem.pk }}">Excluir</a>
 					</td>
 						{% endfor %}
 					{% else %}

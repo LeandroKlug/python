@@ -7,6 +7,18 @@ from model import Viagem
 app = Flask(__name__)
 
 lista_viagens = []
+for i in range(10):
+    lista_viagens.append(
+        Viagem(
+        model_pk = lista_viagens[-1].pk + 1 if lista_viagens else 1,
+        model_nome = f'viagem {i}', 
+        model_local = f'local {i}', 
+        model_ida = f'ida {i}', 
+        model_volta = f'volta {i}',
+        model_carro = f'carro {i}',
+        model_onibus = f'onibus {i}',
+        model_aviao = f'aviao {i}',
+        ))
 
 @app.route("/")
 def index():
@@ -128,10 +140,7 @@ def excluir_pessoa():
 
 @app.route("/listar_viagem")
 def listar_viagem():
-    
-    nova_viagem = []    
-
-    return render_template('listar_viagem.html', lista = listar_viagem)
+    return render_template('listar_viagem.html', lista = lista_viagens)
 
 
 @app.route("/form_inserir_viagem")
@@ -154,6 +163,7 @@ def incluir_viagem():
     form_aviao = request.args.get("input_aviao")
 
     nova_viagem = Viagem(
+        model_pk = lista_viagens[-1].pk + 1 if lista_viagens else 1,
         model_nome = form_nome, 
         model_local = form_local, 
         model_ida = form_ida, 
@@ -173,11 +183,11 @@ def incluir_viagem():
 @app.route("/form_alterar_viagem")
 def form_alterar_viagem():
 
-    nome = request.args.get("nome")
+    pos = request.args.get("pos")
 
     for viagem in lista_viagens:
 
-        if nome == viagem.nome:
+        if int(pos) == viagem.pk:
             return render_template('form_alterar_viagem.html', 
                 viagem = viagem)
 
@@ -193,15 +203,13 @@ def alterar_viagem():
     ida = request.args.get("ida")
     volta = request.args.get("volta")
 
-    indice = -1
+    pk = int(request.args.get("pk"))
 
-    for i in range(len(lista_viagens)):
-        if lista_viagens[i].nome == nome_original:
-            indice = i
+    for viagem in lista_viagens:
+        if viagem.pk == pk:
+            lista_viagens[viagem.pk - 1] = Viagem(pk, nome, local, ida, volta)
             break
-
-    if indice >= 0:
-        lista_viagens[indice] = Viagem(nome, local, ida, volta)        
+                
 
     return listar_viagem()
 
@@ -212,11 +220,10 @@ def excluir_viagem():
 
     excluir = None
 
-    nome = request.args.get("nome")
+    pos = request.args.get("pos")
 
     for viagem in lista_viagens:
-        
-        if nome == viagem.nome:
+        if viagem.pk == int(pos):
             excluir = viagem
             break
 

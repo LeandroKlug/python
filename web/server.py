@@ -6,8 +6,6 @@ from model import Viagem
 
 app = Flask(__name__)
 
-lista_viagens = []
-
 @app.route("/")
 def index():
     return render_template('index.html')
@@ -21,6 +19,9 @@ def index():
  ##        ##       ##    ## ##    ## ##     ## ##     ## 
  ##        ########  ######   ######   #######  ##     ## 
 
+
+lista_pessoas = []
+
 @app.route("/listar_pessoas")
 def listar_pessoas():
     
@@ -29,9 +30,9 @@ def listar_pessoas():
     return render_template('listar_pessoas.html', lista = listar_pessoas)
 
 
-@app.route("/form_inserir_pessoas")
-def form_inserir_pessoas():
-    return render_template("form_inserir_pessoas.html")
+@app.route("/form_inserir_pessoa")
+def form_inserir_pessoa():
+    return render_template("form_inserir_pessoa.html")
 
 
 @app.route("/incluir_pessoa")
@@ -125,6 +126,8 @@ def excluir_pessoa():
    ## ##    ##  ##     ## ##    ##  ##       ##     ## 
     ###    #### ##     ##  ######   ######## ##     ## 
 
+
+lista_viagens = []
 
 @app.route("/listar_viagem")
 def listar_viagem():
@@ -234,6 +237,8 @@ def excluir_viagem():
  ##         ## ##   ##       ##   ###    ##    ##     ## 
  ########    ###    ######## ##    ##    ##     #######  
 
+
+lista_eventos = []
 
 @app.route("/listar_evento")
 def listar_evento():

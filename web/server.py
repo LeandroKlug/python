@@ -1,24 +1,11 @@
 from flask import Flask, render_template, request, redirect
-from model import Viagem
-
-
-# http://bit.ly/2PfHiqX
+from model import Viagem, Pessoa, Evento
 
 app = Flask(__name__)
 
 lista_viagens = []
-for i in range(10):
-    lista_viagens.append(
-        Viagem(
-        model_pk = lista_viagens[-1].pk + 1 if lista_viagens else 1,
-        model_nome = f'viagem {i}', 
-        model_local = f'local {i}', 
-        model_ida = f'ida {i}', 
-        model_volta = f'volta {i}',
-        model_carro = f'carro {i}',
-        model_onibus = f'onibus {i}',
-        model_aviao = f'aviao {i}',
-        ))
+lista_pessoas = []
+lista_eventos = []
 
 @app.route("/")
 def index():
@@ -33,17 +20,14 @@ def index():
  ##        ##       ##    ## ##    ## ##     ## ##     ## 
  ##        ########  ######   ######   #######  ##     ## 
 
-@app.route("/listar_pessoas")
-def listar_pessoas():
-    
-    nova_pessoa = []    
-
-    return render_template('listar_pessoas.html', lista = listar_pessoas)
+@app.route("/listar_pessoa")
+def listar_pessoa():
+    return render_template('listar_pessoa.html', lista = lista_pessoas)
 
 
-@app.route("/form_inserir_pessoas")
-def form_inserir_pessoas():
-    return render_template("form_inserir_pessoas.html")
+@app.route("/form_inserir_pessoa")
+def form_inserir_pessoa():
+    return render_template("form_inserir_pessoa.html")
 
 
 @app.route("/incluir_pessoa")
@@ -56,17 +40,18 @@ def incluir_pessoa():
     form_cpf = request.args.get("input_cpf")
 
     nova_pessoa = Pessoa(
-        model_nome_pessoa = form_nome_pessoa, 
+        model_pk = lista_pessoas[-1].pk + 1 if lista_pessoas else 1,
+        model_nome_pessoa = form_nome_pessoa,
         model_idade = form_idade, 
         model_genero = form_genero, 
-        model_cpf = form_cpf,
+        model_cpf = form_cpf 
         )
     
 
     lista_pessoas.append(nova_pessoa)
 
-    return render_template('success_msg.html', 
-        mensagem = f"Viagem {nova_pessoa.nome} foi inserida com sucesso!") 
+    return render_template('success_pessoa.html', 
+        mensagem = f"Pessoa {nova_pessoa.nome_pessoa} foi inserida com sucesso!") 
 
 
 @app.route("/form_alterar_pessoa")
@@ -80,7 +65,7 @@ def form_alterar_pessoa():
             return render_template('form_alterar_pessoa.html', 
                 pessoa = pessoa)
 
-    return listar_pessoas()        
+    return listar_pessoa        
 
 
 
@@ -91,8 +76,6 @@ def alterar_pessoa():
     idade = request.args.get("idade")
     genero = request.args.get("genero")
     cpf = request.args.get("cpf")
-
-    indice = -1
 
     for i in range(len(lista_pessoas)):
         if lista_pessoas[i].nome_pessoa == nome_original:
@@ -105,7 +88,7 @@ def alterar_pessoa():
                                     ida,
                                     volta)        
 
-    return listar_pessoas()
+    return listar_pessoa()
 
 
 
@@ -125,7 +108,7 @@ def excluir_pessoa():
     if excluir != None:
         lista_pessoas.remove(excluir)
 
-    return listar_pessoas()
+    return listar_pessoa()
 
 
 
@@ -176,7 +159,7 @@ def incluir_viagem():
 
     lista_viagens.append(nova_viagem)
 
-    return render_template('success_msg.html', 
+    return render_template('success_viagem.html', 
         mensagem = f"Viagem {nova_viagem.nome} inserida!") 
 
 
@@ -247,7 +230,7 @@ def listar_evento():
     
     novo_evento = []    
 
-    return render_template('listar_eventos.html', lista = listar_evento)
+    return render_template('listar_eventos.html', lista = lista_eventos)
 
 
 @app.route("/form_inserir_evento")
@@ -259,6 +242,7 @@ def form_inserir_evento():
 def incluir_evento():
     
     # info básica 
+    form_pk = request.args.get("input_pk")
     form_nome_evento = request.args.get("input_nome_evento")
     form_data_inicio = request.args.get("input_data_inicio")
     form_data_final = request.args.get("input_data_final")
@@ -270,7 +254,8 @@ def incluir_evento():
     form_diurno = request.args.get("input_diurno")
     form_integral = request.args.get("input_integral")
 
-    nova_viagem = Viagem(
+    novo_evento = Evento(
+        model_pk = form_pk,
         model_nome_evento = form_nome_evento, 
         model_data_inicio = form_data_inicio, 
         model_data_final = form_data_final, 
@@ -284,8 +269,8 @@ def incluir_evento():
 
     lista_eventos.append(novo_evento)
 
-    return render_template('success_msg.html', 
-        mensagem = f"Viagem {novo_evento.nome_evento} inserida!") 
+    return render_template('success_evento.html', 
+        mensagem = f"Evento {novo_evento.nome_evento} inserida!") 
 
 
 @app.route("/form_alterar_evento")

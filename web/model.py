@@ -34,7 +34,7 @@ class Viagem:
 
 
 class Evento:
-
+	pk = 0
 	nome_evento = ""
 	data_inicio = ""
 	data_final = ""
@@ -45,6 +45,7 @@ class Evento:
 	integral = ""
 
 	def __init__(self,
+		model_pk 			="",
 		model_nome_evento	="",
 		model_data_inicio	="",
 		model_data_final	="",
@@ -67,18 +68,21 @@ class Evento:
 
 class Pessoa:
 
+	pk = 0
 	nome_pessoa = ""
 	idade = ""
 	genero = ""
 	cpf = ""
 
 	def __init__(self,
+		model_pk 			="",
 		model_nome_pessoa	="",
 		model_idade			="",
 		model_genero		="",
 		model_cpf			=""
 		):
 
+		self.pk = model_pk
 		self.nome_pessoa = model_nome_pessoa
 		self.idade = model_idade
 		self.genero = model_genero

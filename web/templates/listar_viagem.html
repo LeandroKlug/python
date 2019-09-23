@@ -25,6 +25,7 @@
 					<th>Local</th>
 					<th>Início</th>
 					<th>Volta</th>
+					<th>Transporte</th>
 					<th>editar</th>
 					<th>excluir</th>
 				</tr>
@@ -35,6 +36,13 @@
 					<td>{{ viagem.local }}</td>
 					<td>{{ viagem.ida }}</td>
 					<td>{{ viagem.volta }}</td>
+					{% if viagem.carro %}
+					<td>{{ viagem.carro }}</td>
+					{% elif viagem.onibus %}
+					<td>{{ viagem.onibus }}</td>
+					{% else %}
+					<td>{{ viagem.aviao }}</td>
+					{% endif %}
 	    			<td>
 	    				<a class="btn btn-outline-success ml-5 mb-2" href="/form_alterar_viagem?pos={{ viagem.pk }}">Alterar</a>
 	    			</td>

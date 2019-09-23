@@ -12,43 +12,16 @@
 			<div class="row justify-content-center">
 				<div class="col-8 my-5">
 		  			<a href="/"><h2>Sistema RDV - Relatório de Viagem</h2></a>
-		  			<p>Lista de viagens</p>
 		  		</div>
-			</div>
-			<div class="col btn my-5">
-		      <a class="btn btn-outline-primary" href="form_inserir_viagem">Inserir Viagem</a><br>
-		    </div>	
-		  <table class="table table-hover" width="100%">
-					{% if lista %}
-				<tr>
-					<th scope="col">Nome</th>
-					<th>Local</th>
-					<th>Início</th>
-					<th>Volta</th>
-					<th>editar</th>
-					<th>excluir</th>
-				</tr>
-		      			{% for evento in lista %}
-					
-				<tr>
-					<td>{{ evento.nome }}</td>
-					<td>{{ evento.local }}</td>
-					<td>{{ evento.ida }}</td>
-					<td>{{ evento.volta }}</td>
-	    			<td>
-	    				<a class="btn btn-outline-success ml-5 mb-2" href="/form_alterar_viagem?pos={{ viagem.pk }}">Alterar</a>
-	    			</td>
-					<td>
-	    				<a class="right btn btn-outline-danger ml-3 mb-2" href="/excluir_viagem?pos={{ viagem.pk }}">Excluir</a>
-					</td>
-						{% endfor %}
-					{% else %}
-				
-					<td>Não há dados para mostrar</td>
-				
-					{% endif %}
-				</tr>
-		  </table>
+			</div>	
+		  	<div class="row">
+		  		<div class="col-12">
+		      <h2>{{ mensagem }}</h2>
+		    </div>
+		    <div class="col-12">
+		      <a class="btn btn-outline-primary" href="listar_pessoa">Continuar</a>
+		    </div>
+		  </div>
 		</div>
 
 
